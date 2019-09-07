@@ -20,6 +20,7 @@ class DeterministicFiniteAutomaton(AbstractAutomaton):
             self.setState(state.id)
         if (isStartingState):
             self.setStartingState(state.id)
+        return state.id
 
     def setState(self, stateId):
         state = self.getStateById(stateId, 'setting automaton current state')
@@ -78,7 +79,7 @@ class DeterministicFiniteAutomaton(AbstractAutomaton):
             self.removeTransition(key)
 
     def getTransitionsFromState(self, stateId):
-        state = self.getStateById(stateId,'outbound transition retrieve')
+        state = self.getStateById(stateId, 'outbound transition retrieve')
         return [x for x in self._transitionDict.values() if x.fromState is state]
 
     def getTransitionsToState(self, stateId):

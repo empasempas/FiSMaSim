@@ -52,11 +52,11 @@ class AbstractAutomaton(AbstractGeneralClass):
         pass
 
     @abc.abstractmethod
-    def getTransitionsFromState(self, state):
+    def getTransitionsFromState(self, stateId):
         pass
 
     @abc.abstractmethod
-    def getTransitionsToState(self, state):
+    def getTransitionsToState(self, stateId):
         pass
 
     @abc.abstractmethod
@@ -71,6 +71,10 @@ class AbstractAutomaton(AbstractGeneralClass):
     def addState(self, isAcceptable, isCurrent, isStartingState):
         state = AbstractState(isAcceptable, isCurrent, isStartingState)
         self._states[state.id] = state
+        return state.id
+
+    def getStates(self):
+        return list(self._states.values())
 
     def _checkStateExists(self, stateId, actionDescription):
         if stateId not in self._states:
@@ -101,4 +105,3 @@ class AbstractAutomaton(AbstractGeneralClass):
             raise StartStateRemovalError
         del self._states[stateId]
         self.removeTransitionsForState(stateId)
-

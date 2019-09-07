@@ -1,5 +1,6 @@
 from automaton.abstracts.abstractTransition import AbstractTransition
 
+
 class DFATransition(AbstractTransition):
     def __init__(self, onInput, fromState, toState):
         super(DFATransition, self).__init__(onInput, fromState, toState)

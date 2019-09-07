@@ -235,6 +235,7 @@ class Test_Step_Forth(unittest.TestCase):
         with self.assertRaises(ActionOnNonexistentSymbolError):
             testObj.stepForth('c')
 
+
 class Test_Get_Transitions_From_State(unittest.TestCase):
     state0Id = None
     state1Id = None

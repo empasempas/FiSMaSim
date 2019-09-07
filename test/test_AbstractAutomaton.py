@@ -1,10 +1,11 @@
 import unittest
-from unittest.mock import Mock
 import uuid
+from unittest.mock import Mock
 
 from automaton.abstracts.abstractAutomaton import AbstractAutomaton
 from automaton.automataErrors import DuplicateSymbolError, StartStateRemovalError, ActionOnNonexistentStateError, \
     ActionOnNonexistentSymbolError
+
 
 class Test_Abstract_Automaton_Remove_Transition(unittest.TestCase):
     def getInstance(self):
@@ -24,6 +25,7 @@ class Test_Abstract_Automaton_Remove_Transition(unittest.TestCase):
         self.assertEqual(len(testObj._transitionDict), 2)
         testObj.removeTransition(3)
         self.assertEqual(len(testObj._transitionDict), 2)
+
 
 class Test_Abstract_Automaton_Add_Symbol(unittest.TestCase):
     def getInstanceWithAlphabet(self, alphabet):
@@ -45,6 +47,7 @@ class Test_Abstract_Automaton_Add_Symbol(unittest.TestCase):
             testObj.addSymbol(testSymbol)
         self.assertListEqual(testObj._alphabet, testAlphabet)
 
+
 class Test_Abstract_Automaton_Remove_Symbol(unittest.TestCase):
     testAlphabet = ['a']
 
@@ -64,6 +67,7 @@ class Test_Abstract_Automaton_Remove_Symbol(unittest.TestCase):
         with self.assertRaises(ActionOnNonexistentSymbolError):
             testObj.removeSymbol('b')
         self.assertListEqual(testObj._alphabet, self.testAlphabet)
+
 
 class Test_Abstract_Automaton_Remove_State(unittest.TestCase):
     testAlphabet = ['a']
