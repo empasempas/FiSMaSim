@@ -2,11 +2,6 @@ class Error(Exception):
     pass
 
 
-class DuplicateStateError(Error):
-    def __init__(self, state):
-        self.message = "State {} already added".format(state)
-
-
 class DuplicateSymbolError(Error):
     def __init__(self):
         self.message = "Symbol already exists in alphabet"
