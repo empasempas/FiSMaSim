@@ -1,16 +1,33 @@
 import unittest
 from unittest.mock import Mock
+import uuid
 
-from automaton.abstractAutomaton import AbstractAutomaton
-from automaton.automataErrors import DuplicateStateError, DuplicateSymbolError, StartStateRemovalError, \
-    ActionOnNonexistentStateError, ActionOnNonexistentSymbolError
+from automaton.abstracts.abstractAutomaton import AbstractAutomaton
+from automaton.automataErrors import DuplicateSymbolError, StartStateRemovalError, ActionOnNonexistentStateError, \
+    ActionOnNonexistentSymbolError
 
+class Test_Abstract_Automaton_Remove_Transition(unittest.TestCase):
+    def getInstance(self):
+        testObj = AbstractAutomaton(['a'], 0, [0], 1)
+        testObj._transitionDict[0] = 0
+        testObj._transitionDict[1] = 1
+        return testObj
+
+    def test_remove_transition(self):
+        testObj = self.getInstance()
+        self.assertTrue(0 in testObj._transitionDict)
+        testObj.removeTransition(0)
+        self.assertFalse(0 in testObj._transitionDict)
+
+    def remove_nonexistent_transition_fails_silently(self):
+        testObj = self.getInstance()
+        self.assertEqual(len(testObj._transitionDict), 2)
+        testObj.removeTransition(3)
+        self.assertEqual(len(testObj._transitionDict), 2)
 
 class Test_Abstract_Automaton_Add_Symbol(unittest.TestCase):
     def getInstanceWithAlphabet(self, alphabet):
-        testStartState = '0'
-        testAcceptedStates = [testStartState]
-        testObj = AbstractAutomaton(alphabet, testStartState, testAcceptedStates)
+        testObj = AbstractAutomaton(alphabet, 0, [0], 1)
         return testObj
 
     def test_add_symbol(self):
@@ -28,46 +45,11 @@ class Test_Abstract_Automaton_Add_Symbol(unittest.TestCase):
             testObj.addSymbol(testSymbol)
         self.assertListEqual(testObj._alphabet, testAlphabet)
 
-
-class Test_Abstract_Automaton_Add_State(unittest.TestCase):
-    testStartState = '0'
-    testAlphabet = ['a']
-    testAcceptedStates = [testStartState]
-    testState = 'b'
-
-    def getInstance(self):
-        testObj = AbstractAutomaton(self.testAlphabet, self.testStartState, list(self.testAcceptedStates))
-        return testObj
-
-    def test_add_state(self):
-        testObj = self.getInstance()
-
-        testObj.addState(self.testState)
-        self.assertListEqual(testObj._states, [self.testStartState, self.testState])
-        self.assertListEqual(testObj._acceptedStates, self.testAcceptedStates)
-
-    def test_add_acceptable_state(self):
-        testObj = self.getInstance()
-
-        testObj.addState(self.testState, True)
-        self.assertListEqual(testObj._states, [self.testStartState, self.testState])
-        self.assertListEqual(testObj._acceptedStates, testObj._states)
-
-    def test_adding_duplicate_state_should_be_impossible(self):
-        testObj = self.getInstance()
-
-        testObj.addState(self.testState)
-        with self.assertRaises(DuplicateStateError):
-            testObj.addState(self.testState)
-        self.assertListEqual(testObj._states, [self.testStartState, self.testState])
-
-
 class Test_Abstract_Automaton_Remove_Symbol(unittest.TestCase):
     testAlphabet = ['a']
-    testStartState = '0'
-    testAcceptedStates = [testStartState]
+
     def getInstance(self):
-        testObj = AbstractAutomaton(self.testAlphabet, self.testStartState, self.testAcceptedStates)
+        testObj = AbstractAutomaton(self.testAlphabet, 0, [0], 1)
         testObj.removeTransitionForSymbol = Mock()
         return testObj
 
@@ -83,86 +65,39 @@ class Test_Abstract_Automaton_Remove_Symbol(unittest.TestCase):
             testObj.removeSymbol('b')
         self.assertListEqual(testObj._alphabet, self.testAlphabet)
 
-
 class Test_Abstract_Automaton_Remove_State(unittest.TestCase):
     testAlphabet = ['a']
-    testStartState = '0'
-    testAcceptedStates = [testStartState]
-    testState = 'b'
+    stateId0 = None
+    stateId1 = None
+    startStateId = None
 
     def getInstance(self):
-        testObj = AbstractAutomaton(self.testAlphabet, self.testStartState, self.testAcceptedStates)
+        testObj = AbstractAutomaton(self.testAlphabet, 0, [0], 2)
         testObj.removeTransitionsForState = Mock()
+        self.stateId0 = list(testObj._states.keys())[0]
+        self.stateId1 = list(testObj._states.keys())[1]
+        self.startStateId = self.stateId0
+        testObj._startingState = testObj._states.get(self.stateId0)
         return testObj
 
     def test_remove_state(self):
         testObj = self.getInstance()
-        testObj.addState(self.testState)
-        self.assertListEqual(testObj._states, [self.testStartState, self.testState])
-
-        testObj.removeState(self.testState)
-        self.assertListEqual(testObj._states, [self.testStartState])
+        self.assertListEqual(list(testObj._states.keys()), [self.stateId0, self.stateId1])
+        testObj.removeState(self.stateId1)
+        self.assertListEqual(list(testObj._states.keys()), [self.stateId0])
 
     def test_remove_start_state_raises_exception(self):
         testObj = self.getInstance()
 
         with self.assertRaises(StartStateRemovalError):
-            testObj.removeState(self.testStartState)
+            testObj.removeState(self.startStateId)
 
     def test_remove_nonexistent_state(self):
         testObj = self.getInstance()
+        testId = uuid.uuid4()
 
         with self.assertRaises(ActionOnNonexistentStateError):
-            testObj.removeState(self.testState)
-
-
-class Test_Abstract_Automaton_Toggle_State_Acceptability(unittest.TestCase):
-    testAlphabet = ['a']
-    testStartState = '0'
-    testAcceptedStates = [testStartState]
-    testState = 'b'
-
-    def getInstance(self):
-        testObj = AbstractAutomaton(self.testAlphabet, self.testStartState, list(self.testAcceptedStates))
-        return testObj
-
-    def test_toggle_acceptability_to_rejected(self):
-        testObj = self.getInstance()
-        testObj.toggleStateAcceptability(self.testStartState)
-        self.assertListEqual(testObj._acceptedStates, [])
-
-    def test_toggle_acceptability_from_rejected_to_acceptable(self):
-        testObj = self.getInstance()
-        testObj.addState(self.testState)
-
-        testObj.toggleStateAcceptability(self.testState)
-        self.assertListEqual(testObj._acceptedStates, [self.testStartState, self.testState])
-
-    def test_toggle_acceptability_on_nonexistent_state(self):
-        testObj = self.getInstance()
-
-        with self.assertRaises(ActionOnNonexistentStateError):
-            testObj.toggleStateAcceptability(self.testState)
-
-class Test_Is_AutomatonFully_Defined(unittest.TestCase):
-    testAlphabet = ['a', 'b']
-    testStartState = '0'
-    testAcceptedStates = ['1']
-    testStates = [testStartState, '1']
-
-    def getInstance(self):
-        testObj = AbstractAutomaton(self.testAlphabet, self.testStartState, list(self.testAcceptedStates))
-        testObj._transitionDict = {'a_!_0': '1', 'b_!_0': '1', 'a_!_1': '1', 'b_!_1': '0'}
-        return testObj
-
-    def test_automaton_is_defined(self):
-        testObj = self.getInstance()
-        self.assertTrue(testObj.isAutomatonFullyDefined())
-
-    def test_automaton_is_not_defined(self):
-        testObj = self.getInstance()
-        testObj.removeTransition('a_!_0')
-        self.assertFalse(testObj.isAutomatonFullyDefined())
+            testObj.removeState(testId)
 
 
 if __name__ == '__main__':
