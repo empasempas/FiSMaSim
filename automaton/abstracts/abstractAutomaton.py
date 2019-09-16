@@ -12,12 +12,11 @@ class AbstractAutomaton(AbstractGeneralClass):
     def __init__(self, alphabet, startStateIndex, acceptedStateIndexes, totalStateCount):
         if acceptedStateIndexes is None:
             acceptedStateIndexes = []
+        super(AbstractAutomaton, self).__init__()
         self._currentState = None
         self._startingState = None
-
-        super(AbstractAutomaton, self).__init__()
         self._states = {}
-        for i in range(totalStateCount):
+        for i in range(0, totalStateCount):
             isAcceptable = i in acceptedStateIndexes
             isCurrent = i == startStateIndex
             isStartingState = i == startStateIndex
@@ -71,10 +70,18 @@ class AbstractAutomaton(AbstractGeneralClass):
     def addState(self, isAcceptable, isCurrent, isStartingState):
         state = AbstractState(isAcceptable, isCurrent, isStartingState)
         self._states[state.id] = state
+        if isCurrent == True:
+            self._currentState = state
         return state.id
 
     def getStates(self):
         return list(self._states.values())
+
+    def getAlphabet(self):
+        return self._alphabet
+
+    def getCurrentStateId(self):
+        return self._currentState.id
 
     def _checkStateExists(self, stateId, actionDescription):
         if stateId not in self._states:
@@ -96,12 +103,12 @@ class AbstractAutomaton(AbstractGeneralClass):
     def removeSymbol(self, symbol):
         if symbol not in self._alphabet:
             raise ActionOnNonexistentSymbolError('deletion')
-        self._alphabet.remove(symbol)
         self.removeTransitionsForSymbol(symbol)
+        self._alphabet.remove(symbol)
 
     def removeState(self, stateId):
         state = self.getStateById(stateId, 'deletion')
         if state is self._startingState:
             raise StartStateRemovalError
-        del self._states[stateId]
         self.removeTransitionsForState(stateId)
+        del self._states[stateId]

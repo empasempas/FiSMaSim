@@ -15,3 +15,9 @@ class AbstractTransition(AbstractGeneralClass):
     @abc.abstractmethod
     def toNotation(self):
         pass
+
+    def toStateId(self):
+        return self.toState.id
+
+    def fromStateId(self):
+        return self.fromState.id

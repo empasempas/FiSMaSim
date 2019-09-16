@@ -7,7 +7,9 @@ from automaton.deterministicFiniteAutomaton.dfaTransition import DFATransition
 class DeterministicFiniteAutomaton(AbstractAutomaton):
     limiter = "_!_"
 
-    def __init__(self, alphabet, startStateIndex=0, acceptedStateIndexes=None, totalStateCount=1):
+    def __init__(self, alphabet=None, startStateIndex=0, acceptedStateIndexes=None, totalStateCount=1):
+        if alphabet is None:
+            alphabet = []
         if acceptedStateIndexes is None:
             acceptedStateIndexes = []
         super(DeterministicFiniteAutomaton, self).__init__(alphabet, startStateIndex, acceptedStateIndexes,
@@ -17,9 +19,9 @@ class DeterministicFiniteAutomaton(AbstractAutomaton):
         state = DFAState(isAcceptable, isCurrent, isStartingState)
         self._states[state.id] = state
         if (isCurrent):
-            self.setState(state.id)
+            self._currentState = state
         if (isStartingState):
-            self.setStartingState(state.id)
+            self._startingState = state
         return state.id
 
     def setState(self, stateId):
@@ -35,6 +37,7 @@ class DeterministicFiniteAutomaton(AbstractAutomaton):
             self._startingState.toggleStarting()
         self._startingState = state
         state.toggleStarting()
+        self.setState(stateId)
 
     @staticmethod
     def createTransitionKey(inputSymbol, currentStateId):
@@ -93,6 +96,7 @@ class DeterministicFiniteAutomaton(AbstractAutomaton):
             key = DeterministicFiniteAutomaton.createTransitionKey(inputSymbol, self._currentState.id)
             transition = self._transitionDict[key]
             self.setState(transition.toState.id)
+            return transition.toState.id
 
     def isAutomatonFullyDefined(self):
         allTransitionsDefined = len(self._transitionDict) == len(self._states) * len(self._alphabet)
