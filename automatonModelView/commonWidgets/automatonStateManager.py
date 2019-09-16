@@ -1,5 +1,5 @@
 from PySide2.QtCore import Signal, Slot
-from PySide2.QtWidgets import QWidget, QComboBox, QPushButton, QHBoxLayout, QLineEdit, QLayout
+from PySide2.QtWidgets import QWidget, QComboBox, QPushButton, QHBoxLayout, QLayout
 
 
 class AutomatonStateManager(QWidget):

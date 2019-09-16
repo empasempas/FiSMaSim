@@ -3,6 +3,7 @@ import sys
 
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QApplication, QMainWindow
+
 from automatonModelView.deterministicFiniteAutomaton.dfaProjectWidget import DFAProjectWidget
 
 

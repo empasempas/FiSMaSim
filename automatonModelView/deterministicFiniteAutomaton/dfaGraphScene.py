@@ -1,5 +1,4 @@
 from PySide2.QtCore import Slot
-from PySide2.QtWidgets import QGraphicsItem
 
 from automatonModelView.abstracts.abstractGraphScene import AbstractStateGraphScene
 from automatonModelView.deterministicFiniteAutomaton.shapes.dfaEdge import DFAEdge

@@ -1,4 +1,3 @@
-from PySide2.QtCore import Qt
 from PySide2.QtGui import QColor
 from PySide2.QtWidgets import QGraphicsItem
 

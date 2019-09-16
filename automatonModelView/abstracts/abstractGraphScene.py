@@ -2,7 +2,7 @@ from abc import abstractmethod
 
 from PySide2.QtCore import QPointF, Signal, Slot
 from PySide2.QtGui import QPainter
-from PySide2.QtWidgets import QGraphicsView, QGraphicsSceneMouseEvent, QGraphicsItem
+from PySide2.QtWidgets import QGraphicsView, QGraphicsSceneMouseEvent
 
 from automatonModelView.abstracts.abstractGeneral import AbstractGeneralGraphScene_Meta, AbstractGeneralGraphSceneClass
 
@@ -118,7 +118,6 @@ class AbstractStateGraphScene(AbstractGeneralGraphSceneClass):
         for edge in edgesForInput:
             self.removeItem(edge)
         del edgesForInput[:]
-
 
     def mouseDoubleClickEvent(self, event: QGraphicsSceneMouseEvent):
         selectedNode = self.selectedNode()

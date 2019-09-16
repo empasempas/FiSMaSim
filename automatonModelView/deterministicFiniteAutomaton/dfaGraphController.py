@@ -2,8 +2,8 @@ from PySide2.QtCore import Slot
 
 from automaton.automataErrors import ActionOnNonexistentSymbolError, ActionOnNonexistentStateError
 from automatonModelView.abstracts.abstractAutomatonGraphController import AbstractAutomatonGraphController
-from automatonModelView.deterministicFiniteAutomaton.editors.dfaTransitionEditor import DFATransitionEditor
 from automatonModelView.deterministicFiniteAutomaton.editors.dfaStateEditor import DFAStateEditor
+from automatonModelView.deterministicFiniteAutomaton.editors.dfaTransitionEditor import DFATransitionEditor
 
 
 class DFAGraphController(AbstractAutomatonGraphController):
@@ -26,7 +26,8 @@ class DFAGraphController(AbstractAutomatonGraphController):
 
     def transitionAdd(self, transitionInfo):
         try:
-            self.automaton.addTransition(transitionInfo['fromStateId'], transitionInfo['input'], transitionInfo['toStateId'])
+            self.automaton.addTransition(transitionInfo['fromStateId'], transitionInfo['input'],
+                                         transitionInfo['toStateId'])
             self.signalTransitionAdded.emit(transitionInfo)
         except ActionOnNonexistentSymbolError:
             self.signalError.emit('Input symbol does not exist!')

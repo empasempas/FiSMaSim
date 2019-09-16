@@ -2,6 +2,7 @@ import abc
 
 from PySide2.QtWidgets import QGraphicsItem, QGraphicsScene, QWidget, QGraphicsItemGroup
 
+
 class AbstractGeneralQGraphicsItemGroup_Meta(type(QGraphicsItemGroup), type(abc.ABCMeta)):
     pass
 
@@ -25,8 +26,10 @@ class AbstractGeneralGraphScene_Meta(type(QGraphicsScene), type(abc.ABCMeta)):
 class AbstractGeneralGraphSceneClass(QGraphicsScene):
     pass
 
+
 class AbstractGeneralWidget_Meta(type(QWidget), type(abc.ABCMeta)):
     pass
+
 
 class AbstractGeneralWidgetClass(QWidget):
     pass
