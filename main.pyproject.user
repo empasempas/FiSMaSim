@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.9.1, 2019-09-02T23:29:16. -->
+<!-- Written by QtCreator 4.9.1, 2019-09-16T01:18:23. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -202,11 +202,11 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run C:/Users/maja.pasaric/Documents/FiSMaSim/AbstractAutomaton.py</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run </value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">AbstractAutomaton</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.C:/Users/maja.pasaric/Documents/FiSMaSim/AbstractAutomaton.py</value>
     <value type="QString" key="PythonEditor.RunConfiguation.Interpreter">C:/python/python.exe</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Script">C:/Users/maja.pasaric/Documents/FiSMaSim/AbstractAutomaton.py</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script"></value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
