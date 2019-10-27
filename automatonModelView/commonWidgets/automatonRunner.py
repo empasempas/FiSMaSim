@@ -38,6 +38,8 @@ class AutomatonRunner(QWidget):
             self.signalValidationRequest.emit()
             self.signalRequestNextInput.emit()
             self.signalRequestCurrentState.emit()
+            self.stepForth.setDisabled(False)
+            self.stepBack.setDisabled(False)
         else:
             self.toggleMode()
 
@@ -55,11 +57,13 @@ class AutomatonRunner(QWidget):
         self.stepBack.setDisabled(False)
         self.history.append({'state': self.currentState, 'input': self.nextInput})
 
+    @Slot()
     def stepForward(self):
         self.signalStepRequest.emit()
         self.signalRequestNextInput.emit()
         self.signalRequestCurrentState.emit()
 
+    @Slot()
     def stepBack(self):
         if len(self.history) > 0:
             previousSituation = self.history.pop()

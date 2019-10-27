@@ -4,8 +4,8 @@ from PySide2.QtWidgets import QWidget, QLabel, QComboBox, QPushButton, QHBoxLayo
 
 class SequenceInputWidget(QWidget):
     signalSymbolsRequest = Signal()
-    signalInputRead = Signal(str)
-    signalNextSymbol = Signal(str)
+    signalInputRead = Signal(object)
+    signalNextSymbol = Signal(object)
 
     def __init__(self, parent):
         super(SequenceInputWidget, self).__init__(parent)
@@ -31,12 +31,14 @@ class SequenceInputWidget(QWidget):
     @Slot(list)
     def populateSelectList(self, symbols):
         self.symbolSelect.clear()
-        self.symbolSelect.addItems(symbols)
+        for symbol in symbols:
+            self.symbolSelect.addItem(symbol, symbol)
         self.symbolSelect.setCurrentIndex(0)
 
     def setDisplayText(self):
         limiter = ', '
-        self.display.setText(limiter.join(self.sequence))
+        if len(self.sequence) > 0:
+            self.display.setText(limiter.join(self.sequence))
 
     @Slot()
     def appendSymbol(self):

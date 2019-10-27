@@ -9,20 +9,20 @@ from automaton.automataErrors import DuplicateSymbolError, StartStateRemovalErro
 
 class AbstractAutomatonGraphController(AbstractGeneralClass):
     __metaclass__ = AbstractGeneral_Meta
-    signalCurrentStateChanged = Signal(str)
-    signalStartingStateChanged = Signal(str)
+    signalCurrentStateChanged = Signal(object)
+    signalStartingStateChanged = Signal(object)
     signalStates = Signal(list)
     signalStateAdded = Signal(object)
     signalStateRemoved = Signal(object)
     signalStateUpdated = Signal(dict)
     signalAlphabet = Signal(list)
-    signalSymbolAdded = Signal(str)
-    signalSymbolRemoved = Signal(str)
-    signalCurrentStateId = Signal(str)
+    signalSymbolAdded = Signal(object)
+    signalSymbolRemoved = Signal(object)
+    signalCurrentStateId = Signal(object)
     signalTransitionAdded = Signal(dict)
     signalTransitionRemoved = Signal(dict)
     signalAutomatonIsValid = Signal()
-    signalError = Signal(str)
+    signalError = Signal(object)
 
     def __init__(self, automaton):
         super(AbstractAutomatonGraphController, self).__init__()
@@ -134,4 +134,5 @@ class AbstractAutomatonGraphController(AbstractGeneralClass):
         if isValid == True:
             self.signalAutomatonIsValid.emit()
         else:
+            print('uh-oh')
             self.signalError.emit('Automaton is not fully defined!')

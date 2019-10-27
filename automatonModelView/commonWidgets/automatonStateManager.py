@@ -4,8 +4,8 @@ from PySide2.QtWidgets import QWidget, QComboBox, QPushButton, QHBoxLayout, QLay
 
 class AutomatonStateManager(QWidget):
     signalStateIdsRequest = Signal()
-    signalSetStartingStateRequest = Signal(str)
-    signalSetCurrentStateRequest = Signal(str)
+    signalSetStartingStateRequest = Signal(object)
+    signalSetCurrentStateRequest = Signal(object)
 
     def __init__(self, parent):
         super(AutomatonStateManager, self).__init__(parent)

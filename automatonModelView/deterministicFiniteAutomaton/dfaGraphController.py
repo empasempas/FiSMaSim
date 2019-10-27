@@ -62,7 +62,7 @@ class DFAGraphController(AbstractAutomatonGraphController):
             self.automaton.setStartingState(stateId)
             self.signalStartingStateChanged(stateId)
         except:
-            self.emitError('Unable to set starting state!')
+            self.signalError.emit('Unable to set starting state!')
 
     @Slot(object)
     def setCurrentState(self, stateId):
