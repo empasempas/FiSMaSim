@@ -27,8 +27,8 @@ class DFATransitionEditor(QDialog):
         self.toStateComboBox.setCurrentIndex(0)
         self.inputComboBox.setCurrentIndex(0)
 
-        deleteButton = QPushButton('Delete transition', self)
-        deleteButton.clicked.connect(self.deleteTransition)
+        self.deleteButton = QPushButton('Delete transition', self)
+        self.deleteButton.clicked.connect(self.deleteTransition)
 
         buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
         buttonBox.accepted.connect(self.sendCollectedInfo)
