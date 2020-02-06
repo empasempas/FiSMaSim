@@ -1,6 +1,7 @@
-from PySide2.QtCore import Slot
+from PySide2.QtCore import Signal, Slot
 
 from automaton.automataErrors import ActionOnNonexistentSymbolError, ActionOnNonexistentStateError
+from automaton.deterministicFiniteAutomaton.deterministicFiniteAutomaton import DeterministicFiniteAutomaton
 from automatonModelView.abstracts.abstractAutomatonGraphController import AbstractAutomatonGraphController
 from automatonModelView.deterministicFiniteAutomaton.editors.dfaStateEditor import DFAStateEditor
 from automatonModelView.deterministicFiniteAutomaton.editors.dfaTransitionEditor import DFATransitionEditor
@@ -52,9 +53,9 @@ class DFAGraphController(AbstractAutomatonGraphController):
 
     @Slot(object, object)
     def removeTransition(self, fromStateId, input):
-        key = DFATransitionEditor.createTransitionKey(input, fromStateId)
+        key = DeterministicFiniteAutomaton.createTransitionKey(input, fromStateId)
         self.automaton.removeTransition(key)
-        self.signalTransitionRemoved({'fromStateId': fromStateId, 'onInput': input})
+        self.signalTransitionRemoved.emit({'fromStateId': fromStateId, 'onInput': input})
 
     @Slot(object)
     def setStartingState(self, stateId):

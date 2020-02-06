@@ -89,6 +89,10 @@ class AbstractProjectWidget(AbstractGeneralWidgetClass):
         pass
 
     @abstractmethod
+    def connectTransitionRemoval(self):
+        pass
+
+    @abstractmethod
     def connectAutomatonManagement(self):
         pass
 

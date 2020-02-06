@@ -119,10 +119,18 @@ class AbstractStateGraphScene(AbstractGeneralGraphSceneClass):
             self.removeItem(edge)
         del edgesForInput[:]
 
+    def mousePressEvent(self, event: QGraphicsSceneMouseEvent):
+        selectedNodes = self.selectedTwoNodes()
+
+        if selectedNodes is not None:
+            self.signalTransitionAddition.emit({'fromState': self.findStateId(selectedNodes['fromNode']),
+                                                'toState': self.findStateId(selectedNodes['toNode']), 'input': None})
+            self.clearSelection()
+        super(AbstractStateGraphScene, self).mousePressEvent(event)
+
     def mouseDoubleClickEvent(self, event: QGraphicsSceneMouseEvent):
         selectedNode = self.selectedNode()
         selectedEdge = self.selectedEdge()
-        selectedNodes = self.selectedTwoNodes()
 
         if selectedNode is not None:
             stateId = self.findStateId(selectedNode)
@@ -133,9 +141,5 @@ class AbstractStateGraphScene(AbstractGeneralGraphSceneClass):
             transitionInfo['fromState'] = self.findStateId(selectedEdge.fromNode)
             transitionInfo['toState'] = self.findStateId(selectedEdge.toNode)
             self.signalTransitionEditing.emit(transitionInfo)
-            self.clearSelection()
-        elif selectedNodes is not None:
-            self.signalTransitionAddition.emit({'fromState': self.findStateId(selectedNodes['fromNode']),
-                                                'toState': self.findStateId(selectedNodes['toNode']), 'input': None})
             self.clearSelection()
         super(AbstractStateGraphScene, self).mouseDoubleClickEvent(event)

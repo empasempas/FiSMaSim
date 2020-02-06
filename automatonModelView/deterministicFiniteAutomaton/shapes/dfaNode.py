@@ -1,5 +1,5 @@
 from PySide2.QtGui import QColor
-from PySide2.QtWidgets import QGraphicsItem
+from PySide2.QtWidgets import QGraphicsItem, QGraphicsTextItem
 
 from automatonModelView.abstracts.shapes.abstractNode import AbstractNode
 

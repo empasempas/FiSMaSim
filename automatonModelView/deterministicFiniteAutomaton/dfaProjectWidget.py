@@ -30,6 +30,10 @@ class DFAProjectWidget(AbstractProjectWidget):
         self.graphController.signalStateRemoved.connect(self.graph.deleteForStateId)
         self.stateManager.signalStateIdsRequest.emit()
 
+    def connectTransitionRemoval(self):
+        # remove transition
+        self.graphController.signalTransitionRemoved.connect(self.graph.deleteStateTransitionForInput)
+
     def connectStateEditing(self):
         # edit state
         self.graph.signalStateEditing.connect(self.graphController.initStateEditor)
