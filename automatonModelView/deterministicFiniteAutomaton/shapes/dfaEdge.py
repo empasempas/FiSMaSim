@@ -40,7 +40,7 @@ class DFAEdge(AbstractEdge):
 
     def paint(self, painter, option, widget):
         pen = QPen()
-        pen.setColor(QColor(154, 35, 27))
+        pen.setColor(QColor(150, 150, 150))
         pen.setWidth(1)
         painter.setPen(pen)
 

@@ -31,7 +31,7 @@ class AbstractNode(AbstractGeneralGraphicsItemClass):
         self._edges = []
         self.currentFill = self.fillQColor
         self.border = QGraphicsEllipseItem(-self.radius, -self.radius, self.radius * 2, self.radius * 2)
-        self.finalNodeBorder = QGraphicsEllipseItem(-self.radius + 4, -self.radius + 4, self.radius * 2 - 10,
+        self.finalNodeBorder = QGraphicsEllipseItem(-self.radius + 5, -self.radius + 5, self.radius * 2 - 10,
                                                     self.radius * 2 - 10)
         self.finalNodeBorder.mapToParent(self.border.pos())
         if self.isAcceptable == False:
@@ -43,7 +43,7 @@ class AbstractNode(AbstractGeneralGraphicsItemClass):
             self.resolveFillColor()
 
         self.labelBox = QGraphicsTextItem(self)
-        self.labelBox.setPos(0, 0)
+        self.labelBox.setPos(-self.radius/2, -self.radius/2)
         self.labelBox.setDefaultTextColor(QColor(0, 0, 0))
 
     @property
@@ -151,7 +151,7 @@ class AbstractNode(AbstractGeneralGraphicsItemClass):
         self.resolveFinalNodeBorder()
         self.border.paint(painter, option, widget)
         self.finalNodeBorder.paint(painter, option, widget)
-        self.labelBox.setTextWidth(20)
+        self.labelBox.setTextWidth(35)
         self.labelBox.setDefaultTextColor(QColor(0, 0, 0))
 
     def itemChange(self, change, value):
