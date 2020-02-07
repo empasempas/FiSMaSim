@@ -1,6 +1,8 @@
 from PySide2.QtCore import Signal, Slot
 from PySide2.QtWidgets import QDialog, QComboBox, QDialogButtonBox, QLabel, QGridLayout, QPushButton
 
+from aspect.logging import logFunction
+
 
 class DFATransitionEditor(QDialog):
     signalEditedTransitionInfo = Signal(dict, dict)
@@ -54,6 +56,7 @@ class DFATransitionEditor(QDialog):
         return {'fromStateId': self.fromStateComboBox.currentData(), 'toStateId': self.toStateComboBox.currentData(),
                 'input': self.inputComboBox.currentData()}
 
+    @logFunction
     def deleteTransition(self):
         info = self.collectInfo()
         self.signalTransitionDeletion.emit(info['fromStateId'], info['input'])

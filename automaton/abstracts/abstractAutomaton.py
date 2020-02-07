@@ -1,5 +1,6 @@
 import abc
 
+from aspect.logging import logFunction
 from automaton.abstracts.abstractGeneral import AbstractGeneralClass, AbstractGeneral_Meta
 from automaton.abstracts.abstractState import AbstractState
 from automaton.automataErrors import StartStateRemovalError, ActionOnNonexistentStateError, \
@@ -67,6 +68,7 @@ class AbstractAutomaton(AbstractGeneralClass):
         pass
 
     @abc.abstractmethod
+    @logFunction
     def addState(self, isAcceptable, isCurrent, isStartingState):
         state = AbstractState(isAcceptable, isCurrent, isStartingState)
         self._states[state.id] = state

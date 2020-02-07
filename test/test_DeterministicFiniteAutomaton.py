@@ -75,67 +75,6 @@ class Test_Transition_Value_Creation(unittest.TestCase):
         self.assertEqual(value.toState, 'c')
 
 
-# class Test_Abstract_Automaton_Toggle_State_Acceptability(unittest.TestCase):
-#     testAlphabet = ['a']
-#     testStartState = '0'
-#     testAcceptedStates = [testStartState]
-#     testState = 'b'
-#
-#     def getInstance(self):
-#         testObj = AbstractAutomaton(self.testAlphabet, self.testStartState, list(self.testAcceptedStates))
-#         return testObj
-#
-#     def test_toggle_acceptability_to_rejected(self):
-#         testObj = self.getInstance()
-#         testObj.toggleStateAcceptability(self.testStartState)
-#         self.assertListEqual(testObj._acceptedStates, [])
-#
-#     def test_toggle_acceptability_from_rejected_to_acceptable(self):
-#         testObj = self.getInstance()
-#         testObj.addState(self.testState)
-#
-#         testObj.toggleStateAcceptability(self.testState)
-#         self.assertListEqual(testObj._acceptedStates, [self.testStartState, self.testState])
-#
-#     def test_toggle_acceptability_on_nonexistent_state(self):
-#         testObj = self.getInstance()
-#
-#         with self.assertRaises(ActionOnNonexistentStateError):
-#             testObj.toggleStateAcceptability(self.testState)
-
-# class Test_Abstract_Automaton_Add_State(unittest.TestCase):
-# testStartState = '0'
-# testAlphabet = ['a']
-# testAcceptedStates = [testStartState]
-# testState = 'b'
-#
-# def getInstance(self):
-#     testObj = AbstractAutomaton(self.testAlphabet, self.testStartState, list(self.testAcceptedStates))
-#     return testObj
-#
-# def test_add_state(self):
-#     testObj = self.getInstance()
-#
-#     testObj.addState(self.testState)
-#     self.assertListEqual(testObj._states, [self.testStartState, self.testState])
-#     self.assertListEqual(testObj._acceptedStates, self.testAcceptedStates)
-#
-# def test_add_acceptable_state(self):
-#     testObj = self.getInstance()
-#
-#     testObj.addState(self.testState, True)
-#     self.assertListEqual(testObj._states, [self.testStartState, self.testState])
-#     self.assertListEqual(testObj._acceptedStates, testObj._states)
-#
-# def test_adding_duplicate_state_should_be_impossible(self):
-#     testObj = self.getInstance()
-#
-#     testObj.addState(self.testState)
-#     with self.assertRaises(DuplicateStateError):
-#         testObj.addState(self.testState)
-#     self.assertListEqual(testObj._states, [self.testStartState, self.testState])
-
-
 class Test_Add_Transition(unittest.TestCase):
     state0Id = None
     state1Id = None

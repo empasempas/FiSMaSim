@@ -5,6 +5,7 @@ from PySide2.QtGui import QPainter
 from PySide2.QtWidgets import QGraphicsView, QGraphicsSceneMouseEvent
 
 from automatonModelView.abstracts.abstractGeneral import AbstractGeneralGraphScene_Meta, AbstractGeneralGraphSceneClass
+from aspect.logging import logFunction
 
 
 class AbstractStateGraphScene(AbstractGeneralGraphSceneClass):
@@ -21,7 +22,7 @@ class AbstractStateGraphScene(AbstractGeneralGraphSceneClass):
         self.view = QGraphicsView()
         self.view.setScene(self)
         self.view.setRenderHints(QPainter.Antialiasing | QPainter.TextAntialiasing)
-        self.setSceneRect(0, 0, 800, 600)
+        # self.setSceneRect(0, 0, 800, 600)
 
     @abstractmethod
     @Slot(dict)
@@ -119,6 +120,7 @@ class AbstractStateGraphScene(AbstractGeneralGraphSceneClass):
             self.removeItem(edge)
         del edgesForInput[:]
 
+    @logFunction
     def mousePressEvent(self, event: QGraphicsSceneMouseEvent):
         selectedNodes = self.selectedTwoNodes()
 
@@ -128,6 +130,7 @@ class AbstractStateGraphScene(AbstractGeneralGraphSceneClass):
             self.clearSelection()
         super(AbstractStateGraphScene, self).mousePressEvent(event)
 
+    @logFunction
     def mouseDoubleClickEvent(self, event: QGraphicsSceneMouseEvent):
         selectedNode = self.selectedNode()
         selectedEdge = self.selectedEdge()

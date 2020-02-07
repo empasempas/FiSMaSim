@@ -1,5 +1,6 @@
 from PySide2.QtCore import Signal, Slot
 
+from aspect.logging import logFunction
 from automaton.automataErrors import ActionOnNonexistentSymbolError, ActionOnNonexistentStateError
 from automaton.deterministicFiniteAutomaton.deterministicFiniteAutomaton import DeterministicFiniteAutomaton
 from automatonModelView.abstracts.abstractAutomatonGraphController import AbstractAutomatonGraphController
@@ -73,6 +74,7 @@ class DFAGraphController(AbstractAutomatonGraphController):
         except:
             self.signalError.emit('Unable to set current state!')
 
+    @logFunction
     @Slot(object)
     def initStateEditor(self, stateId):
         state = self.automaton.getStateById(stateId, 'user editing state')
